@@ -40,7 +40,7 @@ function Play() {
             </span>
           </Card.Title>
           <div className="m-auto px-4 py-4 w-[100%] text-center">
-            <div className="flex justify-start">
+            <div className="flex justify-center content-center">
               {words.map((value, index) => {
                 return <div className="block">{index+1}. {value}</div>
               })}
