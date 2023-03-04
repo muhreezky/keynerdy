@@ -8,10 +8,11 @@ function Play() {
   const [wordCount, setWordCount] = useState(0);
   const [accuracy, setAccuracy] = useState(100);
   const [time, setTime] = useState(60);
+  const [words, setWords] = useState([]);
 
   useEffect(() => {
-
-  },[]);
+    setWords(() => randomWord(20));
+  }, []);
 
   useEffect(() => {
     let interval = window.setInterval(() => {
@@ -26,7 +27,7 @@ function Play() {
   return (
     <>
       <Card className="text-black bg-slate-50 dark:bg-slate-700 dark:text-white w-[90%] shadow-xl dark:shadow-blue-800" >
-        <Card.Body>
+        <Card.Body className="block">
           <Card.Title className="grid text-center grid-cols-3">
             <span>
               Words = {wordCount}
@@ -40,6 +41,9 @@ function Play() {
           </Card.Title>
           <div className="m-auto px-4 py-4 w-[100%] text-center">
             <div className="flex justify-start">
+              {words.map((value, index) => {
+                return <div className="block">{index+1}. {value}</div>
+              })}
             </div>
           </div>
         </Card.Body>
