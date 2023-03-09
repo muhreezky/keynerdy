@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import { Card, Button, Input, Modal, Countdown } from "react-daisyui";
+import { Card, Button, Input, Modal, Countdown, Alert } from "react-daisyui";
 import { useNavigate } from "react-router-dom";
-import { IoReload } from "react-icons/all";
+import { IoReload, BiError } from "react-icons/all";
 import randomWord from "random-words";
 import BackButton from './BackButton';
 
@@ -12,8 +12,12 @@ function Play() {
   const [wordsList, setWordsList] = useState([]);
   const [pause, setPause] = useState(false);
   const [gameOver, setGameOver] = useState(false);
+  const [correct, setCorrect] = useState(true);
 
   const textInput = useRef();
+
+  let totalScore = Number(localStorage.totalscore);
+  let plays = Number(localStorage.plays);
 
   const retryGame = () => {
     toggleStatus();
@@ -37,7 +41,10 @@ function Play() {
     }
     e.preventDefault();
     if (textInput.current.value == wordsList[0]) {
+      setCorrect(true);
       addScore();
+    } else {
+      setCorrect(false);
     }
   }
 
@@ -61,11 +68,14 @@ function Play() {
   }, [score]);
 
   useEffect(() => {
-    let interval = window.setInterval(() => {
-      if(!pause) {
+    let interval;
+    if(!pause) {
+      interval = window.setInterval(() => {
         setTime((time) => time - 1);
-      }
-    }, 1000);
+      }, 1000);
+    } else {
+      clearInterval(interval);
+    }
     if(time === 0) {
       window.clearInterval(interval);
       textInput.current.blur();
@@ -73,6 +83,20 @@ function Play() {
     }
     return () => window.clearInterval(interval);
   }, [time]);
+
+  useEffect(() => {
+    if (!gameOver) {
+      return;
+    }
+
+    if(score > Number(localStorage.hiscore)) {
+      localStorage.hiscore = score;
+    }
+
+    localStorage.plays = plays + 1;
+    localStorage.totalscore = totalScore + score;
+
+  }, [gameOver]);
 
   return (
     <>
@@ -109,11 +133,16 @@ function Play() {
             </span>
           </Card.Title>
           <div className="m-auto px-4 py-4 w-[100%] text-center">
-            <div className="my-4 w-full">
+            <div className="my-4 w-full text-3xl">
               {wordsList.join(" ")}
             </div>
             {/* <input type="text" className="input input-bordered w-full" /> */}
-            <Input color="primary" className="w-full bg-gray-100 dark:bg-slate-800" ref={textInput} onKeyDown={(e) => correctCheck(e)} />
+            <Input color="primary" className="w-full mt-3 bg-gray-100 dark:bg-slate-800" ref={textInput} onKeyDown={(e) => correctCheck(e)} />
+            <div className="my-4">
+              <Alert icon={<BiError />} status="error" className={correct ? "hidden" : "block"}>
+                You have a typo
+              </Alert>
+            </div>
           </div>
         </Card.Body>
         <Card.Actions className="p-8">

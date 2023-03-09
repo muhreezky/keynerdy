@@ -1,20 +1,14 @@
 import './App.css';
-import { Button, Toggle } from "react-daisyui";
+import { Button } from "react-daisyui";
 import { FaPlay, FaKeyboard, FaQuestion } from "react-icons/fa";
 import { useEffect } from "react";
 import ToggleDark from "./components/ToggleDark";
 import { useNavigate } from "react-router-dom";
 import Footer from "./components/Footer";
+import Statistics from './components/Statistics';
 
 function App() {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if(!localStorage.hiscore) {
-      localStorage.hiscore = 0;
-    }
-    document.title = "KeyNerdy - Literal Typing Game";
-  }, []);
 
   return (
     <div className="m-auto">
@@ -22,7 +16,7 @@ function App() {
         <FaKeyboard className='myicon m-auto mb-5' />
         <div className="text-3xl mb-3 text-center">
           <strong className="mb-3">KeyNerdy</strong>
-          <h2 className="text-xl">Ketiklah sebelum mengetik itu dilarang</h2>
+          <h2 className="text-xl">Literal Typing Game</h2>
         </div>
       </div>
       <div className="w-[100%] mb-12">
@@ -32,17 +26,15 @@ function App() {
         <Button onClick={() => navigate("/help")} fullWidth={true} className="bg-slate-600 text-white mb-3" startIcon={<FaQuestion />}>
           Help
         </Button>
-        <div className="my-12">
-          <div className="float-left">
-            High Score = <b>{localStorage.hiscore}</b> WPM <br />
-            *WPM = Words per Minute
-          </div>
+        <div className="my-8">
           <div className="float-right flex space-x-3">
             <ToggleDark />
+          </div><br />
+          <div className="w-full py-5 m-auto">
+            <Statistics />
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
