@@ -1,10 +1,11 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { Card, Button } from "react-daisyui";
-import { useNavigate } from "react-router-dom";
 import BackButton from './BackButton';
 
 function Help() {
-  const navigate = useNavigate();
+  useEffect(() => {
+    document.title = "KeyNerdy Help Page";
+  }, []);
   return (
     <Card className="text-black bg-slate-50 dark:bg-slate-700 dark:text-white w-[90%] shadow-xl dark:shadow-blue-800">
       <Card.Body>
@@ -14,19 +15,19 @@ function Help() {
           </h1>
         </Card.Title>
         <div className="p-3">
-          <h2 className="text-xl">Cara Bermain</h2>
+          <h2 className="text-xl">How to Play</h2>
           <ol className="list-decimal">
             <li>
-              Klik tombol Play
+              Click Play Button
             </li>
             <li>
-              Ketiklah kata yang terdapat pada layar untuk mendapat score
+              You have 1 minute to play a round
             </li>
             <li>
-              Kumpulkan score sebanyak-banyaknya dalam waktu 1 menit
+              Type as fast as you can to get score
             </li>
             <li>
-              Jika waktu habis, banyaknya skor anda akan menentukan seberapa cepat anda mengetik
+              If the time ran out, your typing speed will automatically calculated
             </li>
           </ol>
         </div>

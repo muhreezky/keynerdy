@@ -13,6 +13,7 @@ function App() {
     if(!localStorage.hiscore) {
       localStorage.hiscore = 0;
     }
+    document.title = "KeyNerdy - Literal Typing Game";
   }, []);
 
   return (

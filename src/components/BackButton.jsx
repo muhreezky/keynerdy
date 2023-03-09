@@ -7,7 +7,7 @@ function BackButton() {
   const navigate = useNavigate();
   return (
     <Button onClick={() => navigate("/")} className="bg-red-700 text-white font-bolder">
-      <GiExitDoor />&nbsp;Keluar
+      <GiExitDoor />&nbsp;Exit
     </Button>
   )
 }
