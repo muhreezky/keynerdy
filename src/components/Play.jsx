@@ -36,16 +36,20 @@ function Play() {
   }
 
   const correctCheck = (e) => {
-    if(e.keyCode != 32) {
+    if(e.key != " ") {
       return;
     }
-    e.preventDefault();
-    if (textInput.current.value == wordsList[0]) {
+
+    let answer = textInput.current.value.replace(/[^a-zA-Z0-9]+/g, "");
+
+    if (answer == wordsList[0]) {
       setCorrect(true);
       addScore();
     } else {
       setCorrect(false);
     }
+    // e.preventDefault();
+    return false;
   }
 
   // Toggle modal show/hidden
