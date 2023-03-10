@@ -36,7 +36,7 @@ function Play() {
   }
 
   const correctCheck = (e) => {
-    if(e.key != " ") {
+    if(e.keyCode != 32) {
       return;
     }
     e.preventDefault();
