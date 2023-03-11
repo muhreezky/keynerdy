@@ -4,11 +4,14 @@ import { FaPlay, FaKeyboard, FaQuestion } from "react-icons/fa";
 import { useEffect } from "react";
 import ToggleDark from "./components/ToggleDark";
 import { useNavigate } from "react-router-dom";
-import Footer from "./components/Footer";
 import Statistics from './components/Statistics';
 
 function App() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = "KeyNerdy - Literal Typing Game";
+  }, []);
 
   return (
     <div className="m-auto">

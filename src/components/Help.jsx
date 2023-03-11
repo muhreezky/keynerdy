@@ -8,7 +8,7 @@ function Help() {
     document.title = "KeyNerdy Help Page";
   }, []);
   return (
-    <div p="5">
+    <div p="6">
       <Card className="text-black bg-slate-50 dark:bg-slate-700 dark:text-white w-full shadow-xl dark:shadow-blue-800">
         <Card.Body>
           <Card.Title className="mb-3">

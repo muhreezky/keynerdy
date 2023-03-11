@@ -5,6 +5,7 @@ function Statistics() {
   const Stat = Stats.Stat;
   let plays = Number(localStorage.plays) || 0;
   let totalScore = Number(localStorage.totalscore) || 0;
+  let avg = totalScore ? Math.round(totalScore / plays) : 0;
 
   useEffect(() => {
     if(!localStorage.hiscore) {
@@ -16,7 +17,6 @@ function Statistics() {
     if(!localStorage.totalscore) {
       localStorage.totalscore = 0;
     }
-    document.title = "KeyNerdy - Literal Typing Game";
   }, []);
 
   return (
@@ -33,7 +33,7 @@ function Statistics() {
       <Stats.Stat>
         <Stat.Item variant="title">Average Speed</Stat.Item>
         <Stat.Item variant="value">
-          {Math.round(totalScore / plays) || 0}{" "}
+          {avg}{" "}
           <span className="text-sm">
           WPM
           </span>

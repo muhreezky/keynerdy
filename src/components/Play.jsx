@@ -13,16 +13,19 @@ function Play() {
   const [pause, setPause] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [correct, setCorrect] = useState(true);
+  const [answer, setAnswer] = useState("");
 
   const textInput = useRef();
 
   let totalScore = Number(localStorage.totalscore);
   let plays = Number(localStorage.plays);
 
+  // Game Retry
   const retryGame = () => {
     toggleStatus();
     setScore(0);
     setTime(60);
+    setCorrect(true);
     setWordsList(randomWord(10));
   }
 
@@ -35,21 +38,14 @@ function Play() {
     setScore((scr) => scr + 1);
   }
 
-  const correctCheck = (e) => {
-    if(e.key != " ") {
-      return;
-    }
-
-    let answer = textInput.current.value.replace(/[^a-zA-Z0-9]+/g, "");
-
-    if (answer == wordsList[0]) {
+  const correctCheck = () => {
+    if (wordsList[0] == answer.toLowerCase()) {
       setCorrect(true);
       addScore();
     } else {
       setCorrect(false);
     }
     // e.preventDefault();
-    return false;
   }
 
   // Toggle modal show/hidden
@@ -58,7 +54,7 @@ function Play() {
   }
 
   useEffect(() => {
-    setWordsList(() => randomWord(10));
+    setWordsList(() => randomWord(5));
   }, []);
 
   useEffect(() => {
@@ -70,6 +66,11 @@ function Play() {
   useEffect(() => {
     addWord();
   }, [score]);
+
+  useEffect(() => {
+    correctCheck();
+  }, [answer]);
+
 
   useEffect(() => {
     let interval;
@@ -128,30 +129,29 @@ function Play() {
       </Modal>
       <Card className="text-black bg-slate-50 dark:bg-slate-700 dark:text-white w-[90%] shadow-xl dark:shadow-blue-800" >
         <Card.Body className="block">
-          <Card.Title className="grid text-center grid-cols-2">
+          <Card.Title className="grid text-center grid-cols-3">
             <span>
               Score = <Countdown value={score} />
             </span>
             <span>
               Time = <Countdown value={time} />
             </span>
+            <BackButton />
           </Card.Title>
           <div className="m-auto px-4 py-4 w-[100%] text-center">
-            <div className="my-4 w-full text-3xl">
-              {wordsList.join(" ")}
+            <div className="my-4 w-full text-xl">
+              {wordsList.map((value, key) => {
+                return (
+                  <div key={key} className={`p-3 border rounded-lg ${key == 0 ? "bg-green-700" : "bg-blue-700"} text-white mb-4`}>
+                    {value}
+                  </div>
+                )
+              })}
             </div>
             {/* <input type="text" className="input input-bordered w-full" /> */}
-            <Input color="primary" className="w-full mt-3 bg-gray-100 dark:bg-slate-800" ref={textInput} onKeyDown={(e) => correctCheck(e)} />
-            <div className="my-4">
-              <Alert icon={<BiError />} status="error" className={correct ? "hidden" : "block"}>
-                You have a typo
-              </Alert>
-            </div>
+            <Input color="primary" className="w-full mt-3 bg-gray-100 dark:bg-slate-800" ref={textInput} onChange={(e) => setAnswer(e.target.value)} />
           </div>
         </Card.Body>
-        <Card.Actions className="p-8">
-          <BackButton />
-        </Card.Actions>
       </Card>
     </>
   )
