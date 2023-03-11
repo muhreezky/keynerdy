@@ -142,7 +142,7 @@ function Play() {
             <div className="my-4 w-full text-xl">
               {wordsList.map((value, key) => {
                 return (
-                  <div key={key} className={`p-3 border rounded-lg ${key == 0 ? "bg-green-700" : "bg-blue-700"} text-white mb-4`}>
+                  <div key={key} className={`p-3 border rounded-lg ${key ? "bg-blue-700" : "bg-green-700"} text-white mb-4`}>
                     {value}
                   </div>
                 )
