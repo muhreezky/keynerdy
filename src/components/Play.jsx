@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Card, Button, Input, Modal, Countdown, Alert } from "react-daisyui";
+import { Card, Button, Input, Modal, Countdown, Stack } from "react-daisyui";
 import { useNavigate } from "react-router-dom";
 import { IoReload, BiError } from "react-icons/all";
 import randomWord from "random-words";
@@ -146,7 +146,7 @@ function Play() {
                     {value}
                   </div>
                 )
-              })}
+              }).reverse()}
             </div>
             {/* <input type="text" className="input input-bordered w-full" /> */}
             <Input color="primary" className="w-full mt-3 bg-gray-100 dark:bg-slate-800" ref={textInput} onChange={(e) => setAnswer(e.target.value)} />
